@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Random Number from Server</title>
+</head>
+<body>
+  <h1>Get a Random Number from Server</h1>
+  <p id="message">Click the button to receive a random number:</p>
+  <button onclick="getRandomNumber()">Get Random Number</button>
+
+  <script>
+    function getRandomNumber() {
+      fetch("/random-number")
+        .then(response => {
+          if (!response.ok) throw new Error("Network response was not ok");
+          return response.json();
+        })
+        .then(data => {
+          document.getElementById("message").textContent = "Random Number: " + data.number;
+        })
+        .catch(error => {
+          console.error("Error:", error);
+          document.getElementById("message").textContent = "Failed to get random number.";
+        });
+    }
+  </script>
+</body>
+</html>
